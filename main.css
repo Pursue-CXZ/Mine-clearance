@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+/*容器初始化*/
+#container{
+    /*低级难度*/
+    width: 270px;
+
+    /*中级难度*/
+    /*width:432px;*/
+
+    /*高级难度*/
+    /*width: 810px;*/
+}
+/*顶部按钮样式*/
+#container .top-btn{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+#container input{
+    margin:5px 0 0 10px;
+    background-color: skyblue;
+    border: none;
+    border-radius: 2px;
+    padding: 5px;
+    color:#ffffff;
+    cursor: pointer;
+    outline: none;
+}
+#container input:hover{
+    background-color:cornflowerblue;
+}
+/*游戏区域样式*/
+#container .game-area{
+    font-size: 0;
+}
+#container .game-area div{
+    font-size: 12px;
+    text-align: center;
+    line-height: 25px;
+    margin:1px;
+    width: 25px;
+    height: 25px;
+    background-color: skyblue;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #666666;
+    cursor: pointer;
+    text-indent: -9999px;
+}
+/*底部数据样式*/
+.date{
+    padding: 0 5px;
+}
+.date p{
+    display: inline-block;
+}
+.date p:last-child{
+    float: right;
+}
