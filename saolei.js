@@ -241,10 +241,6 @@ function openArea(x,y) {
             ++index;
         }
     }
-    //递归规则
-    if(typeof marginx === "number" && typeof marginy === "number"){
-        openArea(marginx,marginy)
-    }
 }
 
 //当鼠标右键的时候，设置标记，然后雷数减一，当雷数为0，并且
