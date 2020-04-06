@@ -11,10 +11,8 @@ let allDiv;
 let gameArea = document.getElementsByClassName("game-area")[0];
 //获取最外层容器
 let wrap = document.getElementById("container");
-
 //生成的行数和列数
 let row = 10, cell = 10;
-
 //初始雷数
 let Boom = 10;
 //剩余雷数
@@ -35,6 +33,8 @@ function map(){
         gameContent.push(Array(cell).fill(0))
     }
 
+    initBoom();
+
     //生成随机的炸弹
     function initBoom(){
         let nowBoom = 0;
@@ -51,7 +51,6 @@ function map(){
         }
         initDisplay();
     }
-    initBoom()
 
     //初始化单元格显示周围的雷数
     function initDisplay(){
@@ -90,7 +89,6 @@ function map(){
         }
         gameContent[x][y] = initNum;
     }
-
     return gameContent;
 }
 
@@ -100,6 +98,7 @@ function init(){
     let divs = "";
     for(let i = 0; i < row; i++){
         for(let j = 0; j < cell; j++){
+            // 如果是雷
             if(gameContent[i][j] === 10){
                 divs += `<div data-open="no" data-x="${i}" data-y="${j}" data-nums="${gameContent[i][j]}">
                            X
@@ -156,6 +155,7 @@ gameArea.onclick = function(event){
             //如果点击的地方所包含的9宫格啥都没有，那么自动开区域
         }else if(number === 0){
             target.style.backgroundColor = "yellow"
+            target.setAttribute("data-open","yes")
             openArea(currentx,currenty)
         }else{
             target.style.backgroundColor = "yellow";
@@ -176,6 +176,7 @@ gameArea.onclick = function(event){
         }
     }
 }
+
 //计算并开辟空间的函数
 function openArea(x,y) {
     //这里加1的目的是为了减少遍历的次数，比如，如果我点击了第一行的元素，在元素里面的data-x是0，但是你得写1
@@ -201,17 +202,22 @@ function openArea(x,y) {
                 //当遍历的元素等于坐标里面的位置，还要判断这个位置的元素是否已经被开过了（data-open），如果开过，就不管
                 //没开过就进行渲染，然后改状态为开过
                 //还要判断当前的值是不是0，如果是，那么保存坐标点，然后递归openArea（），直到点开的周围都不是0，停止
-                if(allDiv[index].getAttribute("data-x") == zuobiao[j][0] && allDiv[index].getAttribute("data-y") == zuobiao[j][1]){
-                   if(allDiv[index].getAttribute("data-open") == "no"){
-                       allDiv[index].style.textIndent = "0";
-                       allDiv[index].setAttribute("data-open","yes");
-                       allDiv[index].style.backgroundColor = "yellow";
-                       if(Number(allDiv[index].getAttribute("data-nums")) === 0){
-                           let marginx = Number(allDiv[index].getAttribute("data-x"));
-                           let marginy = Number(allDiv[index].getAttribute("data-y"));
-                           openArea(marginx,marginy)
-                       }
-                   }
+                // 当index所在的点不符合坐标的8个位置，证明不匹配，index++，判断下个点与8个坐标点的匹配程度
+                try{
+                    if(allDiv[index].getAttribute("data-x") == zuobiao[j][0] && allDiv[index].getAttribute("data-y") == zuobiao[j][1]){
+                        if(allDiv[index].getAttribute("data-open") == "no"){
+                            allDiv[index].style.textIndent = "0";
+                            allDiv[index].setAttribute("data-open","yes");
+                            allDiv[index].style.backgroundColor = "yellow";
+                            if(Number(allDiv[index].getAttribute("data-nums")) === 0){
+                                let marginx = Number(allDiv[index].getAttribute("data-x"));
+                                let marginy = Number(allDiv[index].getAttribute("data-y"));
+                                openArea(marginx,marginy)
+                            }
+                        }
+                    }
+                } catch (e) {
+
                 }
             }
             ++index;
@@ -243,7 +249,7 @@ function openArea(x,y) {
     }
 }
 
-//当鼠标右键的时候，设置标记，然后雷数减一，当雷数为0，并且
+//当鼠标右键的时候，设置标记，然后雷数减一，当雷数为0
 document.oncontextmenu = function(event){
     //取消右键默认行为
     event.preventDefault();
@@ -261,11 +267,10 @@ document.oncontextmenu = function(event){
             flagBoom -=1;
             boomNum.innerText = flagBoom;
         }
-
     }
 }
 
-//点击初级按钮的时候，将
+//点击初级按钮的时候，重置行数，列数，雷数，容器宽度，进行初始化，重置各方面
 chujiBtn.onclick = function(){
     let res = confirm("是否结束当前游戏，进行新的游戏")
     if(res){
@@ -316,6 +321,7 @@ resetBtn.onclick = function(){
     if(res){
         s = 0;
         timer.innerText = s + " 秒";
+        init();
         goTime();
     }
 }
