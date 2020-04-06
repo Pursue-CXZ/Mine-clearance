@@ -206,9 +206,8 @@ function openArea(x,y) {
                 try{
                     if(allDiv[index].getAttribute("data-x") == zuobiao[j][0] && allDiv[index].getAttribute("data-y") == zuobiao[j][1]){
                         if(allDiv[index].getAttribute("data-open") == "no"){
-                            allDiv[index].style.textIndent = "0";
+                            allDiv[index].style.cssText = 'text-indent:0; background-color:yellow;';
                             allDiv[index].setAttribute("data-open","yes");
-                            allDiv[index].style.backgroundColor = "yellow";
                             if(Number(allDiv[index].getAttribute("data-nums")) === 0){
                                 let marginx = Number(allDiv[index].getAttribute("data-x"));
                                 let marginy = Number(allDiv[index].getAttribute("data-y"));
@@ -230,9 +229,8 @@ function openArea(x,y) {
                 try{
                     if(allDiv[index].getAttribute("data-x") == zuobiao[j][0] && allDiv[index].getAttribute("data-y") == zuobiao[j][1]){
                        if(allDiv[index].getAttribute("data-open") == "no"){
-                           allDiv[index].style.textIndent = "0";
+                           allDiv[index].style.cssText = 'text-indent:0; background-color:yellow;';
                            allDiv[index].setAttribute("data-open","yes");
-                           allDiv[index].style.backgroundColor = "yellow";
                            if(Number(allDiv[index].getAttribute("data-nums")) === 0){
                                let marginx = Number(allDiv[index].getAttribute("data-x"));
                                let marginy = Number(allDiv[index].getAttribute("data-y"));
